@@ -68,11 +68,14 @@ class UserController extends Controller
             ]
         );
     }
+
     /**
      * @Route(
      *     path="/do-insert",
      *     name="app_user_doInsert"
      * )
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function doInsert(Request $request)
     {
@@ -94,6 +97,7 @@ class UserController extends Controller
             ]
         );
     }
+
     /**
      * updateAction
      *
@@ -101,7 +105,8 @@ class UserController extends Controller
      *     path="/update/{id}",
      *     name="app_user_update"
      * )
-     *
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function updateAction($id)
     {
@@ -116,6 +121,7 @@ class UserController extends Controller
             ]
         );
     }
+
     /**
      * doUpdateAction
      * No se puede crear un new User y pasarlo a la form por qué no pasará la constraint de entidad única al ser
@@ -128,6 +134,7 @@ class UserController extends Controller
      *     name="app_user_doUpdate"
      * )
      *
+     * @param $id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
