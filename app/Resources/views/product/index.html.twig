@@ -4,22 +4,22 @@
 
 {% block body%}
     <table>
-        {% for product in producto %}
+        {% for prod in product %}
             <tr>
-                <td>{{ product.id }} </td>
-                <td>{{ product.name }} </td>
-                <td>{{ product.description }} </td>
-                <td>{{ product.price }} € </td>
-                <td>{{ product.createAt|date("d/m/Y H:i:s") }} </td>
-                <td>{{ product.updateAt|date("d/m/Y H:i:s") }} </td>
-                <td><a href="{{ path('app_producto_update', {'id': product.id}) }}"> Actualizar </a></td>
-                <td><a href="{{ path('app_producto_remove', {'id': product.id}) }}"> Borrar </a> </td>
+                <td>{{ prod.id }} </td>
+                <td>{{ prod.name }} </td>
+                <td>{{ prod.description }} </td>
+                <td>{{ prod.price }} € </td>
+                <td>{{ prod.createdAt|date("d/m/Y H:i:s") }} </td>
+                <td>{{ prod.updatedAt|date("d/m/Y H:i:s") }} </td>
+                <td><a href="{{ path('app_product_update', {'id': prod.id}) }}"> Actualizar </a></td>
+                <td><a href="{{ path('app_product_remove', {'id': prod.id}) }}"> Borrar </a> </td>
             </tr>
 
         {% endfor %}
         <tr>
 
-            <td><a href="{{ path('app_producto_insert') }}"> Nuevo Producto </a></td>
+            <td><a href="{{ path('app_product_insert') }}"> Nuevo Producto </a></td>
         </tr>
     </table><br>
 

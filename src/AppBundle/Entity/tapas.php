@@ -149,7 +149,7 @@ class tapas
 
 
     /**
-     * User constructor
+     * tapas constructor
      */
     public function __construct()
     {

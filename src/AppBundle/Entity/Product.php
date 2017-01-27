@@ -45,17 +45,26 @@ class Product
 
     /**
      * @var \DateTime
-     * @Asserts\DateTime()
-     * @ORM\Column(name="created_at", type="datetime")
+     *
+     * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
-     * @Asserts\DateTime()
-     * @ORM\Column(name="updated_at", type="datetime")
+     *
+     * @ORM\Column(name="updatedAt", type="datetime", length=255)
      */
     private $updatedAt;
+
+    /**
+     * Product constructor
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = $this->createdAt;
+    }
 
 
     /**
@@ -68,15 +77,7 @@ class Product
         return $this->id;
     }
 
-    /**
-     * Product constructor.
-     *
-     */
-    public function __construct()
-    {
-        $this->createAt = new \Datetime();
-        $this->updateAt = $this->createAt;
-    }
+
 
     /**
      * Set name
@@ -176,11 +177,13 @@ class Product
 
     /**
      * Set updatedAt
+     * @ORM\PreUpdate()
      * @return Product
      */
     public function setUpdatedAt()
     {
         $this->updatedAt = new \DateTime();
+
         return $this;
     }
 

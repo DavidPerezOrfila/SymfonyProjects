@@ -6,20 +6,21 @@ use AppBundle\Entity\Product;
 use AppBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
 
 class ProductController extends Controller
 {
     /**
-     * @Route("/", name="app_producto_index")
+     * @Route("/", name="app_product_index")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
         $m = $this->getDoctrine()->getManager();
         $repo = $m->getRepository('AppBundle:Product');
-         $p = new Product();
+         /*$p = new Product();
          $p
              ->setName('Meizu MX5')
              ->setDescription('Chino con cierta garantía')
@@ -50,13 +51,13 @@ class ProductController extends Controller
 
         return $this->render(':product:index.html.twig',
             [
-                'producto'=> $products,
+                'product'=> $products,
             ]
         );
     }
 
     /**
-     * @Route("/insert", name="app_producto_insert")
+     * @Route("/insert", name="app_product_insert")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function insertAction()
@@ -66,14 +67,15 @@ class ProductController extends Controller
         return $this->render(':product:form.html.twig',
             [
                 'form'      =>$form->createView(),
-                'action'    =>$this->generateUrl('app_producto_doInsert')
+                'action'    =>$this->generateUrl('app_product_doInsert')
             ]
 
         );
     }
 
     /**
-     * @Route("/doInsert", name="app_producto_doInsert")
+     * @Route("/doInsert", name="app_product_doInsert")
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function doInsert(Request $request)
@@ -89,20 +91,21 @@ class ProductController extends Controller
             $m->persist($product);
             $m->flush();
             $this->addFlash('messages', 'producto añadido');
-            return $this->redirectToRoute('app_producto_index');
+            return $this->redirectToRoute('app_product_index');
         }
         $this->addFlash('messages', 'Revisa tus datos');
         return $this->render('product/form.html.twig',
             [
                 'form'      =>$form->createView(),
-                'action'    =>$this->generateUrl('app_producto_doInsert')
+                'action'    =>$this->generateUrl('app_product_doInsert')
             ]
 
         );
     }
 
     /**
-     * @Route(path="/updateProd/{id}", name="app_producto_update")
+     * @Route(path="/updateProd/{id}", name="app_product_update")
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function updateAction($id)
@@ -115,12 +118,13 @@ class ProductController extends Controller
 
         return $this->render(':product:form.html.twig', [
             'form'      =>$form->createView(),
-            'action'    =>$this->generateUrl('app_producto_doUpdate', ['id' => $id])
+            'action'    =>$this->generateUrl('app_product_doUpdate', ['id' => $id])
         ]);
     }
 
     /**
-     * @Route(path="/doUpdateProd/{id}", name="app_producto_doUpdate")
+     * @Route(path="/doUpdateProd/{id}", name="app_product_doUpdate")
+     * @param $id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
@@ -135,33 +139,33 @@ class ProductController extends Controller
         if ($form->isValid()) {
             $m->flush();
             $this->addFlash('messages', 'Producto Actualizado');
-            return $this->redirectToRoute('app_producto_index');
+            return $this->redirectToRoute('app_product_index');
         }
         $this->addFlash('messages', 'Revisa tu formulario');
         return $this->render(':product:form.html.twig',
             [
                 'form'      => $form->createView(),
-                'action'    => $this->generateUrl('app_producto_doUpdate', ['id' => $id]),
+                'action'    => $this->generateUrl('app_product_doUpdate', ['id' => $id]),
             ]
         );
     }
 
     /**
-     * @Route("/remove", name="app_producto_remove")
-     * @param $id
+     * @Route(
+     *     path="/remove/{id}",
+     *     name="app_product_remove"
+     * )
+     * @ParamConverter(name="product", class="AppBundle:Product")
+     * @param Product $product
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeAction($id)
+    public function removeAction(Product $product)
     {
-        $m= $this->getDoctrine()->getManager();
-        $repository = $m ->getRepository('product');
-
-
-        $product = $repository->find($id);
+        $m = $this->getDoctrine()->getManager();
         $m->remove($product);
         $m->flush();
-
-        return $this->redirectToRoute('app_producto_index');
+        $this->addFlash('messages', 'producto borrado');
+        return $this->redirectToRoute('app_product_index');
     }
 
 
