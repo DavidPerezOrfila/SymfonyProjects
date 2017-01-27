@@ -27,12 +27,12 @@ class tapas
      * @var string
      * @Assert\Length(
      *     min="4",
-     *     max="12",
+     *     max="20",
      *     minMessage="nazwa too short",
      *     maxMessage="nazwa too long"
      * )
      * @Assert\NotBlank(message="nazwa cannot be empty")
-     * @ORM\Column(name="nazwa", type="string", length=255, unique=true)
+     * @ORM\Column(name="nazwa", type="string", length=255, unique=false)
      */
     private $nazwa;
 
@@ -146,6 +146,16 @@ class tapas
         return $this->cena;
     }
 
+
+
+    /**
+     * User constructor
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = $this->createdAt;
+    }
     /**
      * Set createdAt
      *
@@ -172,14 +182,12 @@ class tapas
 
     /**
      * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
+     * @ORM\PreUpdate()
      * @return tapas
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt()
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime();
 
         return $this;
     }

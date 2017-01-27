@@ -6,6 +6,7 @@ use AppBundle\Entity\tapas;
 use AppBundle\Form\TapasType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -19,14 +20,14 @@ class TapasController extends Controller
     {
         $m = $this->getDoctrine()->getManager();
         $repo = $m->getRepository('AppBundle:tapas');
-        $p = new tapas();
+        /*$p = new tapas();
         $p
             ->setNazwa('Patatas Bravas')
             ->setOpis('Deliciosas patatas con dos salsas picantes')
             ->setCena('3')
             ;
         $m->persist($p);
-        $m->flush();
+        $m->flush();*/
         $tapas = $repo->findAll();
 
         return $this->render(':tapas:index.html.twig',
@@ -70,7 +71,7 @@ class TapasController extends Controller
             $m->persist($tapas);
             $m->flush();
             $this->addFlash('messages', 'dodany cover');
-            return $this->redirectToRoute('app_producto_index');
+            return $this->redirectToRoute('app_tapas_index');
         }
         $this->addFlash('messages', 'sprawdzic swoje dane');
         return $this->render('tapas/form.html.twig',
@@ -130,19 +131,20 @@ class TapasController extends Controller
     }
 
     /**
-     * @Route("/remove", name="app_tapas_remove")
-     * @param $id
+     * @Route(
+     *     path="/remove/{id}",
+     *     name="app_tapas_remove"
+     * )
+     * @ParamConverter(name="tapas", class="AppBundle:tapas")
+     * @param tapas $tapas
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeAction($id)
+    public function removeAction(tapas $tapas)
     {
-        $m= $this->getDoctrine()->getManager();
-        $repository = $m ->getRepository('tapas');
-
-        $tapas = $repository->find($id);
+        $m = $this->getDoctrine()->getManager();
         $m->remove($tapas);
         $m->flush();
-
+        $this->addFlash('messages', 'pozbawiony gory');
         return $this->redirectToRoute('app_tapas_index');
     }
 

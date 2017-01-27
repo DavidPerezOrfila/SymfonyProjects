@@ -10,8 +10,8 @@
                 <td>{{ x.nazwa }} </td>
                 <td>{{ x.opis }} </td>
                 <td>{{ x.cena }} & </td>
-                <td>{{ x.createAt|date("d/m/Y H:i:s") }} </td>
-                <td>{{ x.updateAt|date("d/m/Y H:i:s") }} </td>
+                <td>{{ x.createdAt|date("d/m/Y H:i:s") }} </td>
+                <td>{{ x.updatedAt|date("d/m/Y H:i:s") }} </td>
                 <td><a href="{{ path('app_tapas_update', {'id': x.id}) }}"> aktualizacja </a></td>
                 <td><a href="{{ path('app_tapas_remove', {'id': x.id}) }}"> usunac </a> </td>
             </tr>
