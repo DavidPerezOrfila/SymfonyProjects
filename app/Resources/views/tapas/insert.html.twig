@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}dodaj pokrywe{% endblock %}
+{% block body %}
+    <div>
+        <form method="post" action="{{ path(action) }}">
+
+            nazwa: <input type="text" name="nazwa" placeholder=""><br>
+            opis: <input type="text" name="opis" placeholder=""><br>
+            cena: <input type="text" name="cena" placeholder=""><br>
+            <input type="submit" value="dodaj">
+
+
+        </form>
+    </div>
+{% endblock %}

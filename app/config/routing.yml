@@ -5,3 +5,11 @@ user:
     resource: "@AppBundle/Controller/UserController.php"
     type: annotation
     prefix: /usuarios
+product:
+    resource: "@AppBundle/Controller/ProductController.php"
+    type: annotation
+    prefix: /productos
+tapas:
+    resource: "@AppBundle/Controller/TapasController.php"
+    type: annotation
+    prefix: /tapas

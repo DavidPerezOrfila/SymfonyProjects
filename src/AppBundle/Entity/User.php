@@ -29,7 +29,7 @@ class User
     /**
      * @var string
      * @Assert\Email()
-     * @Assert\NotBlank(message="Email cannot be empty")     *
+     * @Assert\NotBlank(message="Email cannot be empty")
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;

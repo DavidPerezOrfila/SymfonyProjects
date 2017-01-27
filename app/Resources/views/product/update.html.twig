@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Actualizar Producto{% endblock %}
+{% block body %}
+    <div>
+        <form method="post" action="{{ path(action) }}">
+
+            Nombre: <input type="text" name="Nombre" placeholder=""><br>
+            Descripcion: <input type="text" name="Descripcion" placeholder=""><br>
+            Precio: <input type="text" name="Precio" placeholder=""><br>
+            <input type="submit" value="Añadir">
+
+
+        </form>
+    </div>
+{% endblock %}
